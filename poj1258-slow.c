@@ -1,5 +1,6 @@
 /*
- * Problem: 1258    User: LoiteringLeo
+ * Problem: 1258, Agri-Net, minimum spanning tree
+ * User: LoiteringLeo
  * Memory: 512K     Time: 16MS
  * Language: GCC    Result: Accepted
 */
