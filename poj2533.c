@@ -2,7 +2,7 @@
  * Problem: 2533, Longest Ordered Subsequence
  * User: LoiteringLeo
  * Memory: 4316K     Time: 938MS
- * Language: GCC    Result:
+ * Language: GCC    Result: Accepted
  */
 #include <stdio.h>
 #define MAX_ELE 1000
