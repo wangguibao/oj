@@ -1,96 +1,54 @@
 /*
  * POJ2479.c - Maximum sum
  * Problem: 2479    User: LoiteringLeo
- * Memory: 484K     Time: 454MS
- * Language: GCC    Result: Accepted
+ * Memory: 1068K		Time: 454MS
+ * Language: GCC		Result: Accepted
  */
 #include <stdio.h>
 
 #define MAX_ELE     50000
 #define INFINITY    (50000 * 10000 + 1)
-short ele[MAX_ELE + 1] = {0, };
-
+short ele[MAX_ELE + 1] = {0,};  /* Elements */
+int b[MAX_ELE + 1] = {0,};      /* Max two-subarray sum ending at position i */
+int c[MAX_ELE + 1] = {0,};      /* Max subarray sum ending at position i */
+int d[MAX_ELE + 1] = {0,};      /* max subarray of all sums ending at 1 to i */
 /*
  * lstds - Largest sum of two disjoint subarrays
  * numbers in array a must begin with a[1] and end with a[n]
  */
 int lstds(short *a, int n)
 {
-    int total = a[1];
-    int sum = a[1];
-    int begin;
-    int end;
     int i;
-    int larger1 = -INFINITY;
-    int larger2 = -INFINITY;
-    int ret;
-    int segments = 1;
+    int max = -INFINITY;
+    b[0] = 0;
+    d[0] = b[0];
 
-    begin = end = 1;
-    for (i = 2; i <= n; i++) {
-        if (sum < 0) {
-            if (larger2 < larger1) {
-                if (total > larger2) {
-                    larger2 = total;
-                }
-            }
-            else {
-                if (total > larger1) {
-                    larger1 = total;
-                }
-            }
-
-            sum = a[i];
-            total = a[i];
-            begin = i;
-            segments++;
-        }
-        else {
-            sum += a[i];
+    for (i = 1; i <= n; i++) {
+        b[i] = b[i - 1] + a[i];
+        if (b[i] < a[i]) {
+            b[i] = a[i];
         }
 
-        if (total < sum) {
-            total = sum;
-            end = i;
+        if (max < b[i]) {
+            max = b[i];
         }
+        d[i] = max;
+    }
 
-        if (i == n) {
-            if (larger2 < larger1) {
-                if (total > larger2) {
-                    larger2 = total;
-                }
-            }
-            else {
-                if (total > larger1) {
-                    larger1 = total;
-                }
-            }
+    c[1] = 0;
+    c[2] = a[1] + a[2];
+    max = c[2];
+    for (i = 3; i <= n; i++) {
+        c[i] = c[i - 1] + a[i];
+        if (c[i] < d[i - 1] + a[i]) {
+            c[i] = d[i - 1] + a[i];
+        }
+        if (max < c[i]) {
+            max = c[i];
         }
     }
 
-    if (segments == 1) {
-        int sub_sum = a[begin];
-        int sub_total = a[begin];
-
-        for (i = begin + 1; i <= end; i++) {
-            if (sub_sum > 0) {
-                sub_sum = a[i];
-            }
-            else {
-                sub_sum += a[i];
-            }
-
-            if (sub_total > sub_sum) {
-                sub_total = sub_sum;
-            }
-        }
-
-        ret = sub_total < 0 ? total - sub_total : total;
-    }
-    else {
-        ret = larger1 + larger2;
-    }
-    return ret;
+    return max;
 }
 
 int main()
