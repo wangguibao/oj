@@ -6,7 +6,7 @@
  * Language: GCC    Result: Accepted
  *
  * See Chinese Remainder Theorem
- *https://en.wikipedia.org/wiki/Chinese_remainder_theorem
+ * https://en.wikipedia.org/wiki/Chinese_remainder_theorem
  */
 #include <stdio.h>
 
